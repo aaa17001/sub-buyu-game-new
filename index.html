@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>子不语 - 志怪游戏</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+        }
+        
+        .title-font {
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        .ghost-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .tab-active {
+            border-bottom: 3px solid #eab308;
+            color: #fbbf24;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(234, 179, 8, 0.3);
+        }
+        
+        .item-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .karma-bar {
+            background: linear-gradient(90deg, #dc2626 0%, #fbbf24 50%, #16a34a 100%);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(234, 179, 8, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(234, 179, 8, 0.8); }
+        }
+        
+        .glow-animation {
+            animation: glow 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="ghost-pattern text-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <header class="text-center mb-12">
+            <h1 class="title-font text-6xl text-yellow-400 mb-4 float-animation">子不语</h1>
+            <p class="text-xl text-gray-400">志怪传奇 · 僵尸八级 · 因果循环</p>
+        </header>
+
+        <nav class="flex justify-center mb-8 space-x-8">
+            <button onclick="showTab('character')" class="tab-btn px-6 py-3 text-lg hover:text-yellow-400 transition" data-tab="character">人物设定</button>
+            <button onclick="showTab('zombie')" class="tab-btn px-6 py-3 text-lg hover:text-yellow-400 transition" data-tab="zombie">僵尸八级</button>
+            <button onclick="showTab('item')" class="tab-btn px-6 py-3 text-lg hover:text-yellow-400 transition" data-tab="item">道具系统</button>
+            <button onclick="showTab('karma')" class="tab-btn px-6 py-3 text-lg hover:text-yellow-400 transition" data-tab="karma">因果报应</button>
+        </nav>
+
+        <main id="main-content">
+            <!-- 人物设定 -->
+            <section id="character" class="tab-content">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="item-card rounded-xl p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-3xl mr-4">👺</div>
+                            <div>
+                                <h3 class="text-2xl text-yellow-400 title-font">沈娘子的夫君</h3>
+                                <p class="text-gray-400">僵尸猎手 · 主角</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-gray-300">
+                            <p><strong class="text-yellow-300">身份：</strong>书生，因妻子被僵尸所害，誓要铲除天下僵尸</p>
+                            <p><strong class="text-yellow-300">性格：</strong>正直坚毅、爱恨分明</p>
+                            <p><strong class="text-yellow-300">特长：</strong>道法、剑术</p>
+                            <p><strong class="text-yellow-300">武器：</strong>桃木剑、八卦镜</p>
+                        </div>
+                    </div>
+
+                    <div class="item-card rounded-xl p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center text-3xl mr-4">👩</div>
+                            <div>
+                                <h3 class="text-2xl text-pink-400 title-font">沈娘子</h3>
+                                <p class="text-gray-400">大家闺秀 · 已故</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-gray-300">
+                            <p><strong class="text-pink-300">身份：</strong>富商之女，书生之妻</p>
+                            <p><strong class="text-pink-300">命运：</strong>被僵尸所害，化为冤魂</p>
+                            <p><strong class="text-pink-300">特性：</strong>心系夫君，化为鬼魂仍守护着书生</p>
+                        </div>
+                    </div>
+
+                    <div class="item-card rounded-xl p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center text-3xl mr-4">👴</div>
+                            <div>
+                                <h3 class="text-2xl text-green-400 title-font">老道士</h3>
+                                <p class="text-gray-400">茅山道士 · 导师</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-gray-300">
+                            <p><strong class="text-green-300">身份：</strong>隐世高人，通晓僵尸之道</p>
+                            <p><strong class="text-green-300">性格：</strong>神秘莫测、深藏不露</p>
+                            <p><strong class="text-green-300">本领：</strong>驱魔降妖、炼制符箓</p>
+                            <p><strong class="text-green-300">弱点：</strong>嗜酒如命</p>
+                        </div>
+                    </div>
+
+                    <div class="item-card rounded-xl p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-400 to-violet-500 flex items-center justify-center text-3xl mr-4">👹</div>
+                            <div>
+                                <h3 class="text-2xl text-purple-400 title-font">僵尸王</h3>
+                                <p class="text-gray-400">终极BOSS · 旱魃</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-gray-300">
+                            <p><strong class="text-purple-300">等级：</strong>八级（最高）</p>
+                            <p><strong class="text-purple-300">势力：</strong>统御万僵</p>
+                            <p><strong class="text-purple-300">能力：</strong>呼风唤雨、操控尸毒</p>
+                            <p><strong class="text-purple-300">来历：</strong>千年古尸成精，祸乱人间</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 僵尸八级系统 -->
+            <section id="zombie" class="tab-content hidden">
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="item-card rounded-xl p-5 card-hover border-t-4 border-gray-400">
+                        <div class="text-center mb-4">
+                            <div class="text-4xl mb-2">🧟</div>
+                            <h3 class="text-xl text-gray-300 title-font">一级 · 行尸</h3>
+                        </div>
+                        <div class="text-sm text-gray-400 space-y-1">
+                            <p>HP: 50</p>
+                            <p>攻击: 5</p>
+                            <p>防御: 2</p>
+                            <p class="mt-2 text-xs">最低级僵尸，仅凭本能行动，容易对付</p>
+                        </div>
+                    </div>
+
+                    <div class="item-card rounded-xl p-5 card-hover border-t-4 border-green-500">
+                        <div class="text-center mb-4">
+                            <div class="text-4xl mb-2">🧟‍♂️</div>
+                            <h3 class="text-xl text-green-400 title-font">二级 · 跳尸</h3>
+                        </div>
+                        <div class="text-sm text-gray-400 space-y-1">
+                            <p>HP: 120</p>
+                            <p>攻击: 15</p>
+                            <p>防御: 8</p>
+                            <p class="mt-2 text-xs">能跳跃移动，具备一定攻击性</p>
+                        </div>
+                    </div>
+
+                    <div class="item-card rounded-xl p-5 card-hover border-t-4 border-blue-500">
+                        <div class="text-center mb-4">
+                            <div class="text-4xl mb-2">🦇</div>
+                            <h3 class="text-xl text-blue-400 title-font">三级 · 飞尸</h3>
+                        </div>
+                        <div class="text-sm text-gray-400 space-y-1">
+                            <p>HP: 250</p>
+                            <p>攻击: 30</p>
+                            <p>防御: 18</p>
+                            <p class="mt-2 text-xs">能短暂飞行，速度极快</p>
+                        </div>
+                    </div>
+
+                    <div class="item-card rounded-xl p-5 card-hover border-t-4 border-yellow-500">
+                        <div class="text-center mb-4">
+                            <div class="text-4xl mb-2">👺</div>
+                            <h3 class="text-xl text-yellow-400 title-font">四级 · 毛尸</h3>
+                        </div>
+                        <div class="text-sm text-gray-400 space-y-1">
+                            <p>HP: 500</p>
+                            <p>攻击: 55</p>
+                            <p>防御: 35</p>
+                            <p class="mt-2 text-xs">全身毛发如钢，防御力强</p>
+                        </div>
+                    </div>
+
+                    <div class="item-card rounded-xl p-5 card-hover border-t-4 border-orange-500">
+                        <div class="text-center mb-4">
+                            <div class="text-4xl mb-2">💀</div>
+                            <h3 class="text-xl text-orange-400 title-font">五级 · 血尸</h3>
+                        </div>
+                        <div class="text-sm text-gray-400 space-y-1">
+                            <p>HP: 800</p>
+                            <p>攻击: 80</p>
+                            <p>防御: 50</p>
+                            <p class="mt-2 text-xs">以血为食，身带剧毒</p>
+                        </div>
+                    </div>
+
+                    <div class="item-card rounded-xl p-5 card-hover border-t-4 border-red-500">
+                        <div class="text-center mb-4">
+                            <div class="text-4xl mb-2">👻</div>
+                            <h3 class="text-xl text-red-400 title-font">六级 · 荫尸</h3>
+                        </div>
+                        <div class="text-sm text-gray-400 space-y-1">
+                            <p>HP: 1200</p>
+                            <p>攻击: 120</p>
+                            <p>防御: 70</p>
+                            <p class="mt-2 text-xs">藏于阴暗，能操控阴气</p>
+                        </div>
+                    </div>
+
+                    <div class="item-card rounded-xl p-5 card-hover border-t-4 border-purple-500">
+                        <div class="text-center mb-4">
+                            <div class="text-4xl mb-2">🐉</div>
+                            <h3 class="text-xl text-purple-400 title-font">七级 · 旱魃</h3>
+                        </div>
+                        <div class="text-sm text-gray-400 space-y-1">
+                            <p>HP: 2000</p>
+                            <p>攻击: 180</p>
+                            <p>防御: 100</p>
+                            <p class="mt-2 text-xs">传说中能引发旱灾的怪物</p>
+                        </div>
+                    </div>
+
+                    <div class="item-card rounded-xl p-5 card-hover border-t-4 border-yellow-600 glow-animation">
+                        <div class="text-center mb-4">
+                            <div class="text-4xl mb-2">👑</div>
+                            <h3 class="text-xl text-yellow-600 title-font">八级 · 僵尸王</h3>
+                        </div>
+                        <div class="text-sm text-gray-400 space-y-1">
+                            <p>HP: 5000</p>
+                            <p>攻击: 300</p>
+                            <p>防御: 180</p>
+                            <p class="mt-2 text-xs">最强僵尸，统领万僵</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 道具系统 -->
+            <section id="item" class="tab-content hidden">
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="item-card rounded-xl p-6 card-hover">
+                        <h3 class="text-xl text-yellow-400 title-font mb-4 border-b border-yellow-700 pb-2">武器类</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center"><span class="text-2xl mr-3">🗡️</span><span>桃木剑 - 驱邪第一利器</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">🔪</span><span>赤硝刀 - 专杀僵尸</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">📿</span><span>菩提佛珠 - 佛光护体</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">🏮</span><span>镇魂灯 - 照破邪祟</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="item-card rounded-xl p-6 card-hover">
+                        <h3 class="text-xl text-green-400 title-font mb-4 border-b border-green-700 pb-2">符咒类</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center"><span class="text-2xl mr-3">🟨</span><span>镇尸符 - 定住僵尸</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">🟥</span><span>辟邪符 - 驱散尸毒</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">🟧</span><span>天雷符 - 引雷降妖</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">🟨</span><span>五雷符 - 终极符咒</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="item-card rounded-xl p-6 card-hover">
+                        <h3 class="text-xl text-blue-400 title-font mb-4 border-b border-blue-700 pb-2">药材类</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center"><span class="text-2xl mr-3">🌿</span><span>雄黄草 - 解尸毒</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">🍄</span><span>灵芝 - 恢复HP</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">💎</span><span>朱砂 - 增强符效</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">🧪</span><span>黑狗血 - 污秽僵尸</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="item-card rounded-xl p-6 card-hover">
+                        <h3 class="text-xl text-purple-400 title-font mb-4 border-b border-purple-700 pb-2">特殊类</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center"><span class="text-2xl mr-3">🔮</span><span>八卦镜 - 探查僵尸</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">📜</span><span>降魔杵 - 破除防御</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">⚱️</span><span>骨灰坛 - 收纳灵魂</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">🎭</span><span>招魂幡 - 召唤鬼魂</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="item-card rounded-xl p-6 card-hover">
+                        <h3 class="text-xl text-rose-400 title-font mb-4 border-b border-rose-700 pb-2">消耗品</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center"><span class="text-2xl mr-3">🍱</span><span>干粮 - 恢复体力</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">💧</span><span>清水 - 解除灼热</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">📦</span><span>行囊 - 扩充背包</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">🕯️</span><span>蜡烛 - 照明道具</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="item-card rounded-xl p-6 card-hover">
+                        <h3 class="text-xl text-cyan-400 title-font mb-4 border-b border-cyan-700 pb-2">稀有类</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center"><span class="text-2xl mr-3">💫</span><span>九转还魂丹 - 起死回生</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">🌟</span><span>金丹 - 永久提升属性</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">🎴</span><span>天师印 - 召唤天兵</span></li>
+                            <li class="flex items-center"><span class="text-2xl mr-3">🔱</span><span>捆仙绳 - 捕获僵尸</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 因果报应系统 -->
+            <section id="karma" class="tab-content hidden">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <div class="item-card rounded-xl p-6 mb-6">
+                            <h3 class="text-2xl text-yellow-400 title-font mb-4">因果概述</h3>
+                            <p class="text-gray-300 leading-relaxed">
+                                游戏中的每个行为都会产生因果，善有善报，恶有恶果。
+                                杀死僵尸积累功德，滥杀无辜将招致业障。
+                                杀生越多，业力越重，最终将遭受天劫。
+                            </p>
+                        </div>
+
+                        <div class="item-card rounded-xl p-6">
+                            <h3 class="text-2xl text-green-400 title-font mb-4">善行列表</h3>
+                            <ul class="space-y-3 text-gray-300">
+                                <li class="flex items-center"><span class="text-green-400 mr-2">✓</span> 击杀僵尸 +10 功德</li>
+                                <li class="flex items-center"><span class="text-green-400 mr-2">✓</span> 救助平民 +20 功德</li>
+                                <li class="flex items-center"><span class="text-green-400 mr-2">✓</span> 超度亡魂 +30 功德</li>
+                                <li class="flex items-center"><span class="text-green-400 mr-2">✓</span> 摧毁尸巢 +50 功德</li>
+                                <li class="flex items-center"><span class="text-green-400 mr-2">✓</span> 击败僵尸王 +100 功德</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="item-card rounded-xl p-6 mb-6">
+                            <h3 class="text-2xl text-yellow-400 title-font mb-4">因果判定</h3>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="text-red-400">恶贯满盈</span>
+                                    <span class="text-green-400">功德圆满</span>
+                                </div>
+                                <div class="h-4 rounded-full karma-bar relative">
+                                    <div id="karma-indicator" class="absolute w-4 h-6 bg-white rounded-full border-2 border-yellow-400 top-0 transition-all duration-500" style="left: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-center text-sm">
+                                <div class="bg-red-900/30 rounded p-2">
+                                    <div class="text-red-400">-100以下</div>
+                                    <div class="text-gray-400">天劫降身</div>
+                                </div>
+                                <div class="bg-yellow-900/30 rounded p-2">
+                                    <div class="text-yellow-400">-50~50</div>
+                                    <div class="text-gray-400">平衡状态</div>
+                                </div>
+                                <div class="bg-green-900/30 rounded p-2">
+                                    <div class="text-green-400">50以上</div>
+                                    <div class="text-gray-400">福泽深厚</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item-card rounded-xl p-6">
+                            <h3 class="text-2xl text-red-400 title-font mb-4">恶行列表</h3>
+                            <ul class="space-y-3 text-gray-300">
+                                <li class="flex items-center"><span class="text-red-400 mr-2">✗</span> 误杀平民 -30 业力</li>
+                                <li class="flex items-center"><span class="text-red-400 mr-2">✗</span> 伤害无辜 -50 业力</li>
+                                <li class="flex items-center"><span class="text-red-400 mr-2">✗</span> 杀害动物 -20 业力</li>
+                                <li class="flex items-center"><span class="text-red-400 mr-2">✗</span> 滥用符咒 -10 业力</li>
+                                <li class="flex items-center"><span class="text-red-400 mr-2">✗</span> 与妖为伍 -40 业力</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 item-card rounded-xl p-6">
+                    <h3 class="text-2xl text-purple-400 title-font mb-4 text-center">因果效应</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center p-4 border border-purple-800/50 rounded-lg">
+                            <div class="text-4xl mb-3">☀️</div>
+                            <h4 class="text-lg text-purple-300 mb-2">善报</h4>
+                            <p class="text-sm text-gray-400">功德 > 50 时，攻击+20%，获得NPC帮助，掉落率提升</p>
+                        </div>
+                        <div class="text-center p-4 border border-yellow-800/50 rounded-lg">
+                            <div class="text-4xl mb-3">⚖️</div>
+                            <h4 class="text-lg text-yellow-300 mb-2">平衡</h4>
+                            <p class="text-sm text-gray-400">-50 < 功德 < 50 时，正常游戏，无特殊加成</p>
+                        </div>
+                        <div class="text-center p-4 border border-red-800/50 rounded-lg">
+                            <div class="text-4xl mb-3">⚡</div>
+                            <h4 class="text-lg text-red-300 mb-2">恶果</h4>
+                            <p class="text-sm text-gray-400">功德 < -50 时，防御-30%，僵尸仇恨提升，掉宝率下降</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-12 text-gray-500 text-sm">
+            <p>「子不语怪力乱神」—— 《论语》</p>
+            <p class="mt-2">志怪游戏 · 僵尸八级系统 · 因果报应</p>
+        </footer>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab-btn');
+        const contents = document.querySelectorAll('.tab-content');
+        
+        let currentKarma = 0;
+        
+        function showTab(tabId) {
+            tabs.forEach(tab => {
+                if (tab.dataset.tab === tabId) {
+                    tab.classList.add('tab-active', 'text-yellow-400');
+                    tab.classList.remove('text-gray-400');
+                } else {
+                    tab.classList.remove('tab-active', 'text-yellow-400');
+                    tab.classList.add('text-gray-400');
+                }
+            });
+            
+            contents.forEach(content => {
+                if (content.id === tabId) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        function updateKarma(value) {
+            currentKarma = Math.max(-100, Math.min(100, currentKarma + value));
+            const indicator = document.getElementById('karma-indicator');
+            const percent = (currentKarma + 100) / 2;
+            indicator.style.left = `${percent}%`;
+        }
+
+        tabs.forEach(tab => {
+            tab.classList.add('text-gray-400');
+        });
+        tabs[0].classList.add('tab-active', 'text-yellow-400');
+        tabs[0].classList.remove('text-gray-400');
+
+        console.log('子不语游戏系统已加载');
+        console.log('当前因果值:', currentKarma);
+    </script>
+</body>
+</html>
