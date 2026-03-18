@@ -3,63 +3,84 @@
   "description": "基于清代袁枚《子不语》的志怪题材网页游戏",
   "repository": "https://github.com/aaa17001/sub-buyu-game-new",
   "created_at": "2026-03-18T13:41:00Z",
-  "updated_at": "2026-03-18T13:41:00Z",
+  "updated_at": "2026-03-18T13:50:00Z",
   "features": [
     {
       "id": "feat-001",
       "title": "创建项目基础结构",
       "description": "HTML/CSS/JS 项目框架，Tailwind CSS 集成",
-      "status": "in_progress",
+      "status": "completed",
       "priority": "high",
-      "model": "ollama/qwen3.5"
+      "model": "minimax-m2.5-free",
+      "completed_at": "2026-03-18 13:48",
+      "tool": "opencode"
     },
     {
       "id": "feat-002",
       "title": "实现僵尸八级系统",
-      "description": "紫僵、白僵、绿僵、毛僵、飞僵、游尸、伏尸、不化骨",
-      "status": "pending",
+      "description": "行尸→跳尸→飞尸→毛尸→血尸→荫尸→旱魃→僵尸王",
+      "status": "completed",
       "priority": "high",
-      "model": "ollama/qwen3.5"
+      "model": "minimax-m2.5-free",
+      "completed_at": "2026-03-18 13:48",
+      "tool": "opencode"
     },
     {
       "id": "feat-003",
       "title": "实现道具系统",
-      "description": "法器类、符咒类、丹药类、宝物类",
-      "status": "pending",
+      "description": "武器、符咒、药材、特殊、消耗品、稀有 6 类",
+      "status": "completed",
       "priority": "high",
-      "model": "ollama/qwen3.5"
+      "model": "minimax-m2.5-free",
+      "completed_at": "2026-03-18 13:48",
+      "tool": "opencode"
     },
     {
       "id": "feat-004",
       "title": "实现因果报应系统",
-      "description": "业力值系统，影响遭遇事件和结局",
-      "status": "pending",
+      "description": "善行/恶行列表、因果判定条、善报/恶果效应",
+      "status": "completed",
       "priority": "medium",
-      "model": "ollama/qwen3.5"
+      "model": "minimax-m2.5-free",
+      "completed_at": "2026-03-18 13:48",
+      "tool": "opencode"
     },
     {
       "id": "feat-005",
       "title": "实现人物系统",
-      "description": "书生、狐仙、鬼魅、妖怪、市井人物",
-      "status": "pending",
+      "description": "沈娘子、老道士、僵尸王等角色",
+      "status": "completed",
       "priority": "medium",
-      "model": "ollama/qwen3.5"
+      "model": "minimax-m2.5-free",
+      "completed_at": "2026-03-18 13:48",
+      "tool": "opencode"
     },
     {
       "id": "feat-006",
       "title": "实现 UI 界面",
-      "description": "古风 UI、黄纸符箓风格",
-      "status": "pending",
+      "description": "古风 UI、响应式设计、动画效果",
+      "status": "completed",
       "priority": "medium",
-      "model": "ollama/qwen3.5"
+      "model": "minimax-m2.5-free",
+      "completed_at": "2026-03-18 13:48",
+      "tool": "opencode"
     },
     {
       "id": "feat-007",
       "title": "推送到 GitHub",
       "description": "创建新仓库并推送代码",
-      "status": "pending",
+      "status": "completed",
       "priority": "high",
-      "model": "ollama/qwen3.5"
+      "model": "minimax-m2.5-free",
+      "completed_at": "2026-03-18 13:50",
+      "tool": "opencode"
     }
-  ]
+  ],
+  "summary": {
+    "total_features": 7,
+    "completed": 7,
+    "in_progress": 0,
+    "pending": 0,
+    "completion_rate": "100%"
+  }
 }
